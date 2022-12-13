@@ -8,16 +8,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
+@RequestMapping(value = "/board")
 public class BoardController {
     @Autowired
-    BoardService boardService;
+    BoardServiceImpl boardService;
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String home(Model model){
-        model.addAttribute("list",boardService.getBoardList());
-        return "board/list";
-    }
-    @RequestMapping(value = "/board/list", method = RequestMethod.GET)
+    @RequestMapping(value = "/list", method = RequestMethod.GET)
     public String boardList(Model model){
         model.addAttribute("list",boardService.getBoardList());
         return "board/list";
@@ -28,7 +24,11 @@ public class BoardController {
     }
     @RequestMapping(value = "/addok", method = RequestMethod.POST)
     public String addPostOK(BoardVO vo){
-        boardService.insertBoard(vo);
+        int i = boardService.insertBoard(vo);
+        if(i==0)
+            System.out.println("실패");
+        else
+            System.out.println("성공");
         return "redirect:list";
     }
     @RequestMapping(value = "/editform/{id}",method = RequestMethod.GET)
@@ -39,12 +39,18 @@ public class BoardController {
     }
     @RequestMapping(value = "/editok", method = RequestMethod.POST)
     public String editPostOk(BoardVO vo){
-        boardService.updateBoard(vo);
+        if(boardService.updateBoard(vo)==0)
+            System.out.println("실패");
+        else
+            System.out.println("성공");
         return "redirect:list";
     }
     @RequestMapping(value = "/deleteok/{id}",method = RequestMethod.GET)
     public String deletePostOk(@PathVariable("id") int id){
-        boardService.deleteBoard(id);
+        if(boardService.deleteBoard(id)==0)
+            System.out.println("데이터 삭제 실패");
+        else
+            System.out.println("데이터 삭제 성공");
         return "redirect:../list";
     }
 }

@@ -9,6 +9,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%--<jsp:forward page="../login.jsp"/>--%>
 <html>
 <head>
     <title>Title</title>
@@ -68,5 +69,6 @@
     </c:forEach>
 </table>
 <br/><a href="add">Add New Post</a>
+<br/><a href="../login/logout">Logout</a>
 </body>
 </html>
